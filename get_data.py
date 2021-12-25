@@ -27,4 +27,25 @@ except Exception as e:
     print("Unable to retrieve or parse page",url)
     print("Error",e)
 
-print(json_data[0])
+conn = sqlite3.connect('raw_data.sqlite')
+cur = conn.cursor()
+
+cur.executescript('''
+DROP TABLE IF EXISTS card_transfer;
+
+CREATE TABLE card_transfer(
+    id     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+    count_of_new_credential     INTEGER,
+    year                        INTEGER,
+    month                       INTEGER,
+    issue_date                  TEXT,
+    card_type_issued            TEXT,
+    county                      TEXT,
+    origin_state                TEXT,
+    origin_country              TEXT,
+    geocode                     BLOB
+);
+''')
+
+conn.commit()
+conn.close()

@@ -1,0 +1,22 @@
+{
+    "count_of_new_credential": "1",
+    "year": "2019",
+    "month": "5",
+    "month_name": "May",
+    "issue_date": "2019-05-01T00:00:00.000",
+    "card_type_issued": "Driver License",
+    "county_of_residence": "Snohomish",
+    "state_of_origin": "Kansas",
+    "country_of_origin": "USA",
+    "iso_2_alpha_code": "US",
+    "iso_3_alpha_code": "USA",
+    "iso_numeric_code": "840",
+    "irs_country_code": "US",
+    "geocoded_column": {
+        "type": "Point",
+        "coordinates": [
+            -98.484246,
+            39.011902
+        ]
+    }
+}
