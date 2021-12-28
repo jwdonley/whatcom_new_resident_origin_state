@@ -70,7 +70,7 @@ def top_state_per_year_for_county(county, year):
             FROM card_transfer
             WHERE origin_country = "USA"
                 AND county = ?
-                AND SUBSTR(issue_date, 1, 4) = ?
+                AND year = ?
             GROUP BY origin_state
             ORDER BY origin_state;
     ''', (county, year))
@@ -99,7 +99,7 @@ def top_state_per_year(year):
             SELECT COUNT(*) as count_from_state, origin_state, MIN(issue_date), MAX(issue_date)
             FROM card_transfer
             WHERE origin_country = "USA"
-                AND SUBSTR(issue_date, 1, 4) = ?
+                AND year = ?
             GROUP BY origin_state
             ORDER BY count_from_state DESC;
     ''', (year,))
