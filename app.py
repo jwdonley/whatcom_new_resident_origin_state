@@ -2,13 +2,14 @@ from flask import Flask
 from flask import g
 from flask.helpers import url_for
 from markupsafe import escape
+import os
 import sqlite3
 
 app = Flask(__name__)
 
 def get_db():
     if not hasattr(g, 'sqlite_db'):
-        g.sqlite_db = sqlite3.connect('raw_data.sqlite')
+        g.sqlite_db = sqlite3.connect(os.path.join(app.root_path, 'db', 'raw_data.sqlite'))
     return g.sqlite_db
 
 def get_cursor():
