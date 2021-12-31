@@ -44,7 +44,7 @@ def hello():
         url_for('top_country_per_county', county="Whatcom"),
         url_for('top_country_per_county_per_year', county="Whatcom", year="2020"))
 
-@app.route('/top_state_for/<county>')
+@app.route('/top-state-for/<county>')
 def top_state_for_county(county):
     cur = get_cursor()
     county = escape(county)
@@ -73,7 +73,7 @@ def top_state_for_county(county):
 
     return output + "</table>"
 
-@app.route('/top_state_for/<county>/<year>')
+@app.route('/top-state-for/<county>/<year>')
 def top_state_per_year_for_county(county, year):
     cur = get_cursor()
     county = escape(county)
@@ -104,7 +104,7 @@ def top_state_per_year_for_county(county, year):
 
     return output + "</table>"
 
-@app.route('/top_state_per_year/<year>')
+@app.route('/top-state-per-year/<year>')
 def top_state_per_year(year):
     cur = get_cursor()
     year = escape(year)
@@ -133,7 +133,7 @@ def top_state_per_year(year):
 
     return output + "</table>"
 
-@app.route('/top_states')
+@app.route('/top-states')
 def top_states():
     cur = get_cursor()
 
@@ -160,7 +160,7 @@ def top_states():
 
     return output + "</table>"
 
-@app.route('/top_county_per_state/<state>/<year>')
+@app.route('/top-county-per-state/<state>/<year>')
 def top_county_per_state_year(state, year):
     cur = get_cursor()
     state = escape(state)
@@ -192,7 +192,7 @@ def top_county_per_state_year(state, year):
 
     return output + "</table>"
 
-@app.route('/top_county_per_state/<state>')
+@app.route('/top-county-per-state/<state>')
 def top_county_per_state(state):
     cur = get_cursor()
     state = escape(state)
@@ -222,7 +222,7 @@ def top_county_per_state(state):
 
     return output + "</table>"
 
-@app.route('/top_country')
+@app.route('/top-country')
 def top_country():
     cur = get_cursor()
 
@@ -249,7 +249,7 @@ def top_country():
 
     return output + "</table>"
 
-@app.route('/top_country/<county>')
+@app.route('/top-country/<county>')
 def top_country_per_county(county):
     cur = get_cursor()
     county = escape(county)
@@ -278,7 +278,7 @@ def top_country_per_county(county):
 
     return output + "</table>"
 
-@app.route('/top_country/<county>/<year>')
+@app.route('/top-country/<county>/<year>')
 def top_country_per_county_per_year(county, year):
     cur = get_cursor()
     county = escape(county)
@@ -309,7 +309,7 @@ def top_country_per_county_per_year(county, year):
 
     return output + "</table>"
 
-@app.route('/top_country_per_year/<year>')
+@app.route('/top-country-per-year/<year>')
 def top_country_per_year(year):
     cur = get_cursor()
     year = escape(year)
