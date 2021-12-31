@@ -7,24 +7,14 @@ class DAL:
     def __init__(self, root_path) -> None:
         self.connection = sqlite3.connect(os.path.join(root_path, 'db', 'raw_data.sqlite'))
 
-    @DeprecationWarning
-    def get_db(self) -> sqlite3.Connection:
-        return self.connection
-
     def get_cursor(self) ->sqlite3.Cursor:
         return self.connection.cursor()
 
     def close(self):
         self.connection.close()
 
-    def load_tuple_list(self, cur):
-        output = []
-        for row in cur:
-            output.append((row[0], row[1]))
-        return output
-
     def get_top_state_per_county(self, county):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT COUNT(*) as count_from_state, origin_state, MIN(issue_date), MAX(issue_date)
             FROM card_transfer
             WHERE origin_country = "USA"
@@ -34,7 +24,7 @@ class DAL:
         ''', (county,)))
     
     def get_top_states_per_year_for_county(self, county, year):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT COUNT(*) as count_from_state, origin_state, MIN(issue_date), MAX(issue_date)
             FROM card_transfer
             WHERE origin_country = "USA"
@@ -45,7 +35,7 @@ class DAL:
         ''', (county, year)))
 
     def get_top_states_per_year(self, year):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT COUNT(*) as count_from_state, origin_state, MIN(issue_date), MAX(issue_date)
             FROM card_transfer
             WHERE origin_country = "USA"
@@ -55,7 +45,7 @@ class DAL:
         ''', (year,)))
 
     def get_top_states(self):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT COUNT(*) as count_from_state, origin_state, MIN(issue_date), MAX(issue_date)
             FROM card_transfer
             WHERE origin_country = "USA"
@@ -64,7 +54,7 @@ class DAL:
         '''))
 
     def get_top_county_per_state_year(self, state, year):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT county, COUNT(*) AS total_cards FROM card_transfer
             WHERE year = ?
                 AND origin_country = "USA"
@@ -75,7 +65,7 @@ class DAL:
         ''', (year, state)))
 
     def get_top_county_per_state(self, state):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT county, COUNT(*) AS total_cards FROM card_transfer
             WHERE origin_country = "USA"
                 AND origin_state = ?
@@ -85,7 +75,7 @@ class DAL:
         ''', (state,)))
 
     def get_top_country(self):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT origin_country, COUNT(*) AS total_cards FROM card_transfer
             WHERE origin_country <> "USA"
             GROUP BY origin_country
@@ -93,7 +83,7 @@ class DAL:
         '''))
 
     def get_top_country_per_county(self, county):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT origin_country, COUNT(*) AS total_cards FROM card_transfer
             WHERE origin_country <> "USA"
                 AND county = ?
@@ -102,7 +92,7 @@ class DAL:
         ''', (county,)))
     
     def get_top_country_per_county_per_year(self, county, year):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT origin_country, COUNT(*) AS total_cards FROM card_transfer
             WHERE origin_country <> "USA"
                 AND year = ?
@@ -112,10 +102,16 @@ class DAL:
         ''', (year, county)))
 
     def get_top_country_per_year(self, year):
-        return self.load_tuple_list(self.get_cursor().execute('''
+        return self.__load_tuple_list(self.get_cursor().execute('''
             SELECT origin_country, COUNT(*) AS total_cards FROM card_transfer
             WHERE origin_country <> "USA"
                 AND year = ?
             GROUP BY origin_country
             ORDER BY total_cards DESC;
         ''', (year,)))
+
+    def __load_tuple_list(self, cur):
+        output = []
+        for row in cur:
+            output.append((row[0], row[1]))
+        return output

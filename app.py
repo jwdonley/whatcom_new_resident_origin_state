@@ -3,8 +3,6 @@ from flask import Flask
 from flask import g
 from flask.helpers import url_for
 from markupsafe import escape
-import os
-import sqlite3
 
 app = Flask(__name__)
 
