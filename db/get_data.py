@@ -15,8 +15,21 @@ ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-offset = input("Enter Offset:")
-offset = int(offset)
+# Pick up where we left off
+offset = None
+cur.execute('SELECT COUNT(*) FROM card_transfer' )
+try:
+    row = cur.fetchone()
+    if row is None :
+        offset = 0
+    else:
+        offset = row[0]
+except:
+    offset = 0
+
+if offset is None : offset = 0
+
+print("Offset is", offset)
 
 json_data = None
 
